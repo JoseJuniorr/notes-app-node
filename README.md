@@ -12,7 +12,7 @@ Connect flash: mostrar mensagens globais entre as views
 
 Instalação do bcrypt js
 
-### npm install --save bcrypt
+### npm install --save bcryptjs
 
 Instalação do express-handlebars
 
