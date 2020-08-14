@@ -37,3 +37,5 @@ Passport
 ### npm install dotenv nodemon npm-check-update -D
 
 ### npm install body-parser
+
+### npm install morgan
