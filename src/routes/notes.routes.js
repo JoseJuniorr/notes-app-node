@@ -21,6 +21,7 @@ router.get("/notes", renderNotes);
 //Edit notes
 router.get("/notes/edit/:id", renderEditFormNotes);
 
+//renderiza os dados em um form para editar
 router.put("/notes/edit/:id", updateNote);
 
 //delete posts

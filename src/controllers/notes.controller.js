@@ -17,31 +17,57 @@ NotesController.createNewNote = async (req, res) => {
   await newNote
     .save()
     .then(() => {
-      console.log("Nota salva com sucesso!");
+      req.flash("success_msg", "Nota salva com sucesso!");
+      res.redirect("/notes");
     })
     .catch((err) => {
-      console.log("Erro ao salvar a nota no bd!" + err);
+      req.flash("error_msg", "Erro ao salvar a nota!");
     });
-
-  // console.log(req.body);
-  res.send("create new note");
 };
 
+//Renderiza todas as notas na view all-notes
 NotesController.renderNotes = async (req, res) => {
   const notes = await Note.find();
   res.render("notes/all-notes", { notes });
 };
 
-NotesController.renderEditFormNotes = (req, res) => {
-  res.send("form edit notes");
+//renderiza a nota para a edição utilizando findbyId
+NotesController.renderEditFormNotes = async (req, res) => {
+  const note = await Note.findById(req.params.id);
+
+  console.log(note);
+  res.render("notes/edit-note", { note });
 };
 
-NotesController.updateNote = (req, res) => {
-  res.send("update notes");
+//Envia a atualização para o bd
+NotesController.updateNote = async (req, res) => {
+  const { title, description } = req.body;
+
+  await Note.findByIdAndUpdate(req.params.id, {
+    title,
+    description,
+  })
+    .then(() => {
+      req.flash("success_msg", "Nota editada com sucesso!");
+      res.redirect("/notes");
+    })
+    .catch((err) => {
+      req.flash("error_msg", "Erro ao editar a nota!");
+      res.redirect("/notes");
+    });
 };
 
-NotesController.deleteNote = (req, res) => {
-  res.send("deletar nota");
+//Deletar nota
+NotesController.deleteNote = async (req, res) => {
+  await Note.findByIdAndDelete(req.params.id)
+    .then(() => {
+      req.flash("success_msg", "Nota excluída com sucesso!");
+      res.redirect("/notes");
+    })
+    .catch((err) => {
+      req.flash("error_msg", "Erro ao excluir a nota!");
+      res.redirect("/notes");
+    });
 };
 
 module.exports = NotesController;
