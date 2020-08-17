@@ -1,5 +1,9 @@
 const express = require("express");
 const handlebars = require("express-handlebars");
+const Handlebars = require("handlebars");
+const {
+  allowInsecurePrototypeAccess,
+} = require("@handlebars/allow-prototype-access");
 const bodyParser = require("body-parser");
 const path = require("path");
 const morgan = require("morgan");
@@ -18,7 +22,13 @@ app.set("port", process.env.PORT || 4000);
 app.set("views", path.join(__dirname, "views"));
 
 //view engine
-app.engine("handlebars", handlebars({ defaultLayout: "main" }));
+app.engine(
+  "handlebars",
+  handlebars({
+    defaultLayout: "main",
+    handlebars: allowInsecurePrototypeAccess(Handlebars),
+  })
+);
 app.set("view engine", "handlebars");
 
 //Arquivos estáticos
