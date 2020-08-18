@@ -13,6 +13,7 @@ NotesController.createNewNote = async (req, res) => {
     title: title,
     description: description,
   });
+  newNote.user = req.user.id;
 
   await newNote
     .save()
@@ -27,7 +28,9 @@ NotesController.createNewNote = async (req, res) => {
 
 //Renderiza todas as notas na view all-notes
 NotesController.renderNotes = async (req, res) => {
-  const notes = await Note.find();
+  const notes = await Note.find({ user: req.user.id }).sort({
+    createdAt: "desc",
+  });
   res.render("notes/all-notes", { notes });
 };
 
@@ -35,7 +38,12 @@ NotesController.renderNotes = async (req, res) => {
 NotesController.renderEditFormNotes = async (req, res) => {
   const note = await Note.findById(req.params.id);
 
-  console.log(note);
+  if (note.user != req.user.id) {
+    req.flash("error_msg", "Not Authorized!");
+    return res.redirect("/notes");
+  }
+
+  // console.log(note);
   res.render("notes/edit-note", { note });
 };
 
