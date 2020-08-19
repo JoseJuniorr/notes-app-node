@@ -1,10 +1,11 @@
-<div class="row col-md-4 mx-auto mt-5">
-    <div class="card">
-        <div class="card-header">
-            <h4>Cadastrar Usuário</h4>
-        </div>
-        <div class="card-body">
-            <form action="/users/register" method="POST">
+<div class="card text-center form-signin mt-5">
+
+    <div class="card-header">
+        <h4>Cadastrar Usuário</h4>
+
+
+        <form action="/users/register" method="POST">
+            <div class="card-body">
                 <div class="form-group">
                     <input type="text" class="form-control" name="name" placeholder="Name" value="{{name}}">
                 </div>
@@ -18,7 +19,8 @@
                     <input type="password" class="form-control" name="confirm_password" placeholder="Confirm Password">
                 </div>
                 <button class="btn btn-primary btn-block">Cadastrar</button>
-            </form>
-        </div>
+            </div>
+        </form>
+
     </div>
 </div>
