@@ -20,7 +20,9 @@ passport.use(
         if (match) {
           return done(null, user);
         } else {
-          return done(null, false, { message: "Senha Incorreta!" });
+          return done(null, false, {
+            message: "Usuário e/ou senha incorreta!",
+          });
         }
       }
     }
